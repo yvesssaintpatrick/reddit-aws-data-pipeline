@@ -1,28 +1,4 @@
-version: '3'
-
-x-airflow-common:
-  &airflow-common
-  build:
-    context: .
-    dockerfile: Dockerfile
-  image: custom-airflow:2.7.1-python3.9
-  env_file:
-    - airflow.env
-  volumes:
-    - ./configuration:/opt/airflow/config
-    - ./dags:/opt/airflow/dags
-    - ./data:/opt/airflow/data
-    - ./etl:/opt/airflow/etls
-    - ./logs:/opt/airflow/logs
-    - ./pipelines:/opt/airflow/pipelines
-    - ./plugins:/opt/airflow/plugins
-    - ./tests:/opt/airflow/tests
-    - ./utils:/opt/airflow/utils
-   # - ./airflow.cfg:/opt/airflow/airflow.cfg
-    - ./requirements.txt:/opt/airflow/requirements.txt
-  depends_on:
-    - postgres
-    - redis
+version: '3.9'
 
 services:
   postgres:
@@ -41,21 +17,88 @@ services:
       - "6379:6379"
 
   airflow-init:
-    <<: *airflow-common
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: custom-airflow:2.7.1-python3.9
+    env_file:
+      - airflow.env
+    volumes:
+      - ./configuration:/opt/airflow/config
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+      - ./etl:/opt/airflow/etls
+      - ./logs:/opt/airflow/logs
+      - ./pipelines:/opt/airflow/pipelines
+      - ./plugins:/opt/airflow/plugins
+      - ./tests:/opt/airflow/tests
+      - ./utils:/opt/airflow/utils
+      - ./requirements.txt:/opt/airflow/requirements.txt
+    depends_on:
+      - postgres
+      - redis
     command: >
       bash -c "pip install -r /opt/airflow/requirements.txt && airflow db init && airflow db upgrade && airflow users create --username admin --firstname admin --lastname admin --role Admin --email airflow@airflow.com --password admin"
     restart: "no"
 
   airflow-webserver:
-    <<: *airflow-common
-    command: webserver
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: custom-airflow:2.7.1-python3.9
+    env_file:
+      - airflow.env
+    volumes:
+      - ./configuration:/opt/airflow/config
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+      - ./etl:/opt/airflow/etls
+      - ./logs:/opt/airflow/logs
+      - ./pipelines:/opt/airflow/pipelines
+      - ./plugins:/opt/airflow/plugins
+      - ./tests:/opt/airflow/tests
+      - ./utils:/opt/airflow/utils
+      - ./requirements.txt:/opt/airflow/requirements.txt
     ports:
       - "8080:8080"
+    command: webserver
 
   airflow-scheduler:
-    <<: *airflow-common
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: custom-airflow:2.7.1-python3.9
+    env_file:
+      - airflow.env
+    volumes:
+      - ./configuration:/opt/airflow/config
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+      - ./etl:/opt/airflow/etls
+      - ./logs:/opt/airflow/logs
+      - ./pipelines:/opt/airflow/pipelines
+      - ./plugins:/opt/airflow/plugins
+      - ./tests:/opt/airflow/tests
+      - ./utils:/opt/airflow/utils
+      - ./requirements.txt:/opt/airflow/requirements.txt
     command: scheduler
 
   airflow-worker:
-    <<: *airflow-common
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: custom-airflow:2.7.1-python3.9
+    env_file:
+      - airflow.env
+    volumes:
+      - ./configuration:/opt/airflow/config
+      - ./dags:/opt/airflow/dags
+      - ./data:/opt/airflow/data
+      - ./etl:/opt/airflow/etls
+      - ./logs:/opt/airflow/logs
+      - ./pipelines:/opt/airflow/pipelines
+      - ./plugins:/opt/airflow/plugins
+      - ./tests:/opt/airflow/tests
+      - ./utils:/opt/airflow/utils
+      - ./requirements.txt:/opt/airflow/requirements.txt
     command: celery worker
