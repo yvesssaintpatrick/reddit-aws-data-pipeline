@@ -1,13 +1,22 @@
-from pipelines.reddit_pipeline import reddit_pipeline
-from pipelines.aws_s3_pipeline import upload_s3_pipeline
+from airflow.operators.python import PythonOperator
+from airflow import DAG
 import os
 import sys
 from datetime import datetime
 
-from airflow import DAG
-from airflow.operators.python import PythonOperator
+# Function to handle sys.path modification and imports
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+def setup_imports():
+    sys.path.insert(0, os.path.dirname(
+        os.path.dirname(os.path.abspath(__file__))))
+    global reddit_pipeline, upload_s3_pipeline
+    from pipelines.reddit_pipeline import reddit_pipeline
+    from pipelines.aws_s3_pipeline import upload_s3_pipeline
+
+
+# function to set up imports
+setup_imports()
 
 
 default_args = {
