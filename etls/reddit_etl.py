@@ -1,11 +1,8 @@
 import sys
-
 import numpy as np
 import pandas as pd
 import praw
 from praw import Reddit
-
-
 from utils.constants import POST_FIELDS
 
 
@@ -26,8 +23,6 @@ def extract_posts(reddit_instance: Reddit, subreddit: str, time_filter: str, lim
     posts = subreddit.top(time_filter=time_filter, limit=limit)
 
     post_lists = []
-
-    print(posts)
 
     for post in posts:
         post_dict = vars(post)
