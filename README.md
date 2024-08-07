@@ -115,3 +115,15 @@ Set up automated reporting using tools like IBM Cognos Analytics or Google Data 
 
 
 ![reddit-aws-data-pipeline](https://github.com/user-attachments/assets/d0f88fce-b0ae-40e7-bc1f-441d123f95a1)
+
+
+![newplot (1)](https://github.com/user-attachments/assets/e47da057-2953-4959-9650-b1d78021125f)
+
+
+![newplot (2)](https://github.com/user-attachments/assets/549bae13-acc0-4cc2-90ca-7664ba479de3)
+
+
+![newplot (3)](https://github.com/user-attachments/assets/0025909d-67fc-426c-a0c3-c4eb73eb9fe1)
+
+
+![newplot (4)](https://github.com/user-attachments/assets/8005fc8b-779f-41d3-a70b-966c2d93ea36)
